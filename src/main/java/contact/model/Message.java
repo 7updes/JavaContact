@@ -1,5 +1,7 @@
-package contact;
+package contact.model;
 
+
+import contact.model.Contact;
 
 import java.time.LocalDateTime;
 

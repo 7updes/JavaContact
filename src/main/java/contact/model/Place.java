@@ -1,4 +1,4 @@
-package contact;
+package contact.model;
 
 /**
  * Created by Alex on 09.03.2015.

@@ -1,4 +1,4 @@
-package contact;
+package contact.model;
 
 import java.time.LocalDate;
 import java.util.Set;
@@ -9,9 +9,15 @@ import java.util.Set;
 public class Contact {
     private String firstName;
     private String lastName;
-    private static LocalDate birthDate;
+    private LocalDate birthDate;
     private Set<Hobby> hobbies;
     private Set<Place> places;
+
+//    public Contact(String firstName, String lastName, LocalDate birthDate) {
+//        this.firstName = firstName;
+//        this.lastName = lastName;
+//        this.birthDate = birthDate;
+//    }
 
     public String getFirstName() {
         return firstName;
@@ -29,12 +35,13 @@ public class Contact {
         this.lastName = lastName;
     }
 
-    public static LocalDate getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    public static void setBirthDate(LocalDate birthDate) {
-        Contact.birthDate = birthDate;
+    public void setBirthDate(LocalDate birthDate) {
+
+        this.birthDate = birthDate;
     }
 
     public Set<Hobby> getHobbies() {
