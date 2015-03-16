@@ -1,6 +1,7 @@
 package contact.model;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -10,14 +11,24 @@ public class Contact {
     private String firstName;
     private String lastName;
     private LocalDate birthDate;
+    private int id;
     private Set<Hobby> hobbies;
     private Set<Place> places;
+    private List<Contact> friends;
 
-//    public Contact(String firstName, String lastName, LocalDate birthDate) {
-//        this.firstName = firstName;
-//        this.lastName = lastName;
-//        this.birthDate = birthDate;
-//    }
+    public List<Contact> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(List<Contact> friends) {
+        this.friends = friends;
+    }
+
+    public int getId() { return id; }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -55,9 +66,8 @@ public class Contact {
     public Set<Place> getPlaces() {
         return places;
     }
+
     public void setPlaces(Set<Place> places) {
         this.places = places;
     }
-
-
 }

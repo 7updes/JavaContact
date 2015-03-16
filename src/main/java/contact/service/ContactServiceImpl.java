@@ -10,7 +10,7 @@ import java.util.Set;
 /**
  * Created by Alex on 11.03.2015.
  */
-public class JavaContactImpl implements JavaContact{
+public class ContactServiceImpl implements ContactService {
     @Override
     public void createContact(String firstName, String secondName, LocalDate dateOfBirth) {
 
