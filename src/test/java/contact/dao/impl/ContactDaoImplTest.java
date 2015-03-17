@@ -16,15 +16,28 @@ import static org.junit.Assert.*;
 @RunWith(MockitoJUnitRunner.class)
 public class ContactDaoImplTest {
 
-    ContactDao contactDao ;
-    @InjectMocks
+    ContactDaoImpl contactDao = new ContactDaoImpl() ;
+
     Contact empty = new Contact();
+    Contact friend = new Contact();
 
 
     @Test
-    public void testContactDaoImpl() throws Exception {
-        
+    public void testAddContact() throws Exception {
+        contactDao.addContact(empty);
+        assertEquals(empty, contactDao.getFirstContact());
+    }
 
+    @Test
+    public void testAddFriendShip() throws Exception {
+        contactDao.addFriendShip(empty, friend);
+        assertEquals(empty.getFriends().get(0),friend);
+    }
 
+    @Test
+    public void testContains() throws Exception {
+        assertFalse(contactDao.contains(empty));
+        contactDao.addContact(empty);
+        assertTrue(contactDao.contains(empty));
     }
 }
