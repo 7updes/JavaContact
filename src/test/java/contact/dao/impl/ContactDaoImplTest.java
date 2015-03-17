@@ -23,7 +23,7 @@ public class ContactDaoImplTest {
 
     @Test
     public void testContactDaoImpl() throws Exception {
-
+        
 
 
     }

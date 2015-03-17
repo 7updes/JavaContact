@@ -17,12 +17,14 @@ public class Contact {
     private Set<Hobby> hobbies = new HashSet<Hobby>();
     private Set<Place> places = new HashSet<Place>();
     private List<Contact> friends = new ArrayList<Contact>();
+
+
     public List<Contact> getFriends() {
         return friends;
     }
 
-    public void setFriends(List<Contact> friends) {
-        this.friends = friends;
+    public void setFriends(Contact friend) {
+        friends.add(friend);
     }
 
     public int getId() { return id; }
