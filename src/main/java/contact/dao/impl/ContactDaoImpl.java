@@ -21,9 +21,9 @@ public class ContactDaoImpl implements ContactDao{
 
     @Override
     public void addContact(Contact contact) {
-        numOfId+=1;
         contact.setId(numOfId);
         idMap.put(numOfId,contact);
+        numOfId++;
     }
 
     @Override

@@ -1,6 +1,8 @@
 package contact.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -12,10 +14,9 @@ public class Contact {
     private String lastName;
     private LocalDate birthDate;
     private int id;
-    private Set<Hobby> hobbies;
-    private Set<Place> places;
-    private List<Contact> friends;
-
+    private Set<Hobby> hobbies = new HashSet<Hobby>();
+    private Set<Place> places = new HashSet<Place>();
+    private List<Contact> friends = new ArrayList<Contact>();
     public List<Contact> getFriends() {
         return friends;
     }
