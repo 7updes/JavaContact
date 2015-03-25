@@ -1,10 +1,16 @@
 package contact.dao;
 
 import contact.dao.impl.ContactDaoImpl;
+import contact.dao.impl.HobbyDaoImpl;
+import contact.dao.impl.PlaceDaoImpl;
 import contact.model.Contact;
+import contact.model.Hobby;
+import contact.model.Place;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Alex on 14.03.2015.
@@ -33,6 +39,27 @@ public class App {
         contactDao.addContact(sasha);
         contactDao.addContact(viola);
         contactDao.addContact(vova);
+
+        Hobby dance = new Hobby();
+        dance.setTitle("dancing");
+        dance.setDescription("put your hands in the air");
+        Set<Hobby> girlHobbies = new HashSet<Hobby>();
+        girlHobbies.add(dance);
+        viola.setHobbies(girlHobbies);
+        vova.setHobbies(girlHobbies);
+
+        HobbyDao hobbyDao = new HobbyDaoImpl();
+        System.out.println(hobbyDao.getAllContactsWithHobby(dance));
+
+        Place cinema = new Place();
+        cinema.setTitle("kinoshka");
+        Set<Place> relax = new HashSet<Place>();
+        relax.add(cinema);
+        sasha.setPlaces(relax);
+        viola.setPlaces(relax);
+
+        PlaceDao placeDao = new PlaceDaoImpl();
+        System.out.println(placeDao.getAllContactsForPlace(cinema));
 
 
 

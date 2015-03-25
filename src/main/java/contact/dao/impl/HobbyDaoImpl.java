@@ -5,6 +5,7 @@ import contact.model.Contact;
 import contact.model.Hobby;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -12,16 +13,26 @@ import java.util.Set;
  */
 public class HobbyDaoImpl implements HobbyDao{
 
-
+    Set<Hobby> setHobbies = new HashSet<Hobby>();
 
     @Override
     public void addHobby(Hobby hobby) {
-
+        setHobbies.add(hobby);
     }
+
 
     @Override
     public Set<Contact> getAllContactsWithHobby(Hobby hobby) {
-
-        return null;
+        Set<Contact> allWithHobby = new HashSet<Contact>();
+        for (Map.Entry entry : ContactDaoImpl.idMap.entrySet()){
+            allWithHobby.add((Contact)entry.getValue());
+        }
+        Set<Contact> allWithSameHobby = new HashSet<Contact>();
+        for (Contact contact : allWithHobby){
+            if(contact.getHobbies().contains(hobby)){
+                allWithSameHobby.add(contact);
+            }
+        }
+        return allWithSameHobby;
     }
 }

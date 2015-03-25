@@ -5,8 +5,6 @@ package contact.model;
  */
 public class Place {
     private String title;
-    private double longitude;
-    private double latitude;
     private String description;
 
     public String getTitle() {
@@ -17,27 +15,18 @@ public class Place {
         this.title = title;
     }
 
-    public double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
-    }
-
-    public double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "Place{" +
+                "title='" + title + '\'' +
+                '}';
     }
 }

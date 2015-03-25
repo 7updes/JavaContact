@@ -17,7 +17,17 @@ public class Contact {
     private Set<Hobby> hobbies = new HashSet<Hobby>();
     private Set<Place> places = new HashSet<Place>();
     private List<Contact> friends = new ArrayList<Contact>();
+    private List<List<Message>> allConversation = new ArrayList<List<Message>>();
 
+    public List<List<Message>> getAllConversation() {
+        return allConversation;
+    }
+
+    
+
+    public void setConversation(List<Message> conversation) {
+       allConversation.add(conversation) ;
+    }
 
     public List<Contact> getFriends() {
         return friends;
@@ -72,5 +82,15 @@ public class Contact {
 
     public void setPlaces(Set<Place> places) {
         this.places = places;
+    }
+
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", id=" + id +
+                ", hobbies=" + hobbies +
+                '}';
     }
 }

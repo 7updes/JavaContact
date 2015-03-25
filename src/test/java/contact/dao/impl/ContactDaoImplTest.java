@@ -17,6 +17,16 @@ import static org.junit.Assert.*;
 public class ContactDaoImplTest {
 
     ContactDaoImpl contactDao = new ContactDaoImpl() ;
+    @Mock
+    ContactDao contact123;
+
+    Contact contact = new Contact();
+
+    @Test
+    public void testContact() throws Exception {
+        contact123.addContact(contact);
+        verify(contact123 , times(1)).addContact(contact);
+    }
 
     Contact empty = new Contact();
     Contact friend = new Contact();
