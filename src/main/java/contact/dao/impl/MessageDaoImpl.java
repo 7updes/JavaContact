@@ -13,16 +13,13 @@ import java.util.List;
  * Created by Alex on 11.03.2015.
  */
 public class MessageDaoImpl implements MessageDao {
-
-    List<Message> listMessage = new ArrayList<Message>();
-
     @Override
     public void storeMessage(Message message) {
-        listMessage.add(message);
+
     }
 
     @Override
     public List<Message> getConversation(Contact c1, Contact c2) {
-       return null;
+        return null;
     }
 }

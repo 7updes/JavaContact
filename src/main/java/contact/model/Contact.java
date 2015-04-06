@@ -1,10 +1,7 @@
 package contact.model;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by Alex on 09.03.2015.
@@ -12,20 +9,34 @@ import java.util.Set;
 public class Contact {
     private String firstName;
     private String lastName;
-    private LocalDate birthDate;
+    private Date birthDate;
     private int id;
     private Set<Hobby> hobbies = new HashSet<Hobby>();
     private Set<Place> places = new HashSet<Place>();
     private List<Contact> friends = new ArrayList<Contact>();
-    private List<List<Message>> allConversation = new ArrayList<List<Message>>();
+    private List<Message> allConversation = new ArrayList<Message>();
 
-    public List<List<Message>> getAllConversation() {
+    public Contact() {
+    }
+
+    public Contact(String firstName, String lastName) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public Contact(String firstName, String lastName, Date birthDate) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthDate = birthDate;
+    }
+
+    public List<Message> getAllConversation() {
         return allConversation;
     }
 
-    
-
-    public void setConversation(List<Message> conversation) {
+    public void setConversation(Message conversation) {
        allConversation.add(conversation) ;
     }
 
@@ -35,6 +46,10 @@ public class Contact {
 
     public void setFriends(Contact friend) {
         friends.add(friend);
+    }
+
+    public Date getBirthDate() {
+        return birthDate;
     }
 
     public int getId() { return id; }
@@ -59,13 +74,9 @@ public class Contact {
         this.lastName = lastName;
     }
 
-    public LocalDate getBirthDate() {
-        return birthDate;
-    }
+    public void setBirthDate(Date birthDate) {
 
-    public void setBirthDate(LocalDate birthDate) {
-
-        this.birthDate = birthDate;
+        this.birthDate=birthDate;
     }
 
     public Set<Hobby> getHobbies() {
@@ -87,10 +98,13 @@ public class Contact {
     @Override
     public String toString() {
         return "Contact{" +
-                "firstName='" + firstName + '\'' +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", id=" + id +
+                ", birthDate=" + birthDate +
                 ", hobbies=" + hobbies +
-                '}';
+                ", places=" + places +
+                ", friends=" + friends +
+                '}'+"\n";
     }
 }

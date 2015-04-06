@@ -7,6 +7,15 @@ public class Place {
     private String title;
     private String description;
 
+    public Place(String title) {
+        this.title = title;
+    }
+
+    public Place(String title, String description) {
+        this.title = title;
+        this.description = description;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -23,10 +32,5 @@ public class Place {
         this.description = description;
     }
 
-    @Override
-    public String toString() {
-        return "Place{" +
-                "title='" + title + '\'' +
-                '}';
-    }
+
 }
