@@ -14,27 +14,14 @@ import java.util.Set;
  */
 public class PlaceDaoImpl implements PlaceDao {
 
-    Set<Place> setPlaces = new HashSet<Place>();
-
     @Override
     public void addPlace(Place place) {
-        setPlaces.add(place);
+
     }
 
     @Override
     public Set<Contact> getAllContactsForPlace(Place place) {
-
-        Set<Contact> allWithPlace = new HashSet<Contact>();
-        for (Map.Entry entry : ContactDaoImpl.idMap.entrySet()){
-            allWithPlace.add((Contact)entry.getValue());
-        }
-        Set<Contact> allWithSamePlace = new HashSet<Contact>();
-        for (Contact contact : allWithPlace){
-            if(contact.getPlaces().contains(place)){
-                allWithSamePlace.add(contact);
-            }
-        }
-        return allWithSamePlace;
+        return null;
     }
 }
 
