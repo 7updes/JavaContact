@@ -15,56 +15,48 @@ import java.util.Date;
 import org.hibernate.SessionFactory;
 
 
-
 /**
  * Created by Alex on 11.03.2015.
  */
 
-public class ContactDaoImpl implements ContactDao{
+public class ContactDaoImpl implements ContactDao {
 
     private List<Contact> allContacts = new ArrayList<Contact>();
     private static final String url = "jdbc:mysql://localhost:3306/contactdb";
     private static String name = "root";
     private static String password = "root";
-    private  Connection connection;
+    private Connection connection;
     private PreparedStatement preparedStatement;
 
-    public ContactDaoImpl() {
-        try{
+
+
+    public void addContact(Contact contact) {
+        try {
             connection = DriverManager.getConnection(url, name, password);
+            String firstName = contact.getFirstName();
+            String lastName = contact.getLastName();
+            if (contact.getBirthDate() != null) {
+                Date birthDate = contact.getBirthDate();
+                preparedStatement = connection.prepareStatement("INSERT INTO contact(id, first_name, last_name, birth_date) VALUES(?, ?, ?, ?)");
+                if(contact.getId() != 0){
+                    int id = contact.getId();
+                    preparedStatement.setInt(1, id);
+                }else {
+                    preparedStatement.setString(1, null);
+                }
+                preparedStatement.setDate(4, new java.sql.Date(birthDate.getTime()));
+            }else {
+                preparedStatement = connection.prepareStatement("INSERT INTO contact(id, first_name, last_name) VALUES(?, ?, ?)");
+                preparedStatement.setString(1, null);
+            }
+            preparedStatement.setString(2, firstName);
+            preparedStatement.setString(3, lastName);
+            preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-    }
-
-    public void addContact(Contact contact){
-        try{
-            String firstName = contact.getFirstName();
-            String lastName = contact.getLastName();
-            if(contact.getBirthDate()!=null){
-                Date birthDate = contact.getBirthDate();
-                //incorrect date value
-                preparedStatement = connection.prepareStatement("INSERT INTO contact(id, first_name, last_name, birth_date) VALUES(?, ?, ?, ?)");
-                preparedStatement.setString(1,null);
-                preparedStatement.setString(2,firstName);
-                preparedStatement.setString(3,lastName);
-                preparedStatement.setString(4, String.valueOf(birthDate));
-                System.out.println(String.valueOf(birthDate));
-                preparedStatement.executeUpdate();
-            }else {
-                preparedStatement = connection.prepareStatement("INSERT INTO contact(id, first_name, last_name) VALUES(?, ?, ?)");
-                preparedStatement.setString(1,null);
-                preparedStatement.setString(2,firstName);
-                preparedStatement.setString(3,lastName);
-                preparedStatement.executeUpdate();
-            }
-
-
-        }catch (SQLException e){
-            e.printStackTrace();
-        }finally {
-            if(connection!=null){
+        } finally {
+            if (connection != null) {
                 try {
                     connection.close();
 
@@ -72,7 +64,7 @@ public class ContactDaoImpl implements ContactDao{
                     e.printStackTrace();
                 }
             }
-            if(preparedStatement!=null){
+            if (preparedStatement != null) {
                 try {
                     preparedStatement.close();
 
@@ -83,16 +75,105 @@ public class ContactDaoImpl implements ContactDao{
         }
     }
 
-    public void deleteContact(Contact contact) throws SQLException{
-        try{
-            int id = new ContactDaoImpl().getContactId(contact);
+
+    public void deleteContact(int id) throws SQLException {
+        try {
+            connection = DriverManager.getConnection(url, name, password);
             preparedStatement = connection.prepareStatement("delete from contact where id = ?;");
             preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+                            //for deleteContact()
+    public void deleteContactHobby(int contactId) throws SQLException {
+        try {
+            connection = DriverManager.getConnection(url, name, password);
+            preparedStatement = connection.prepareStatement("delete from contact_hobby where contact_id = ?;");
+            preparedStatement.setInt(1, contactId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+                            //for deleteContact()
+    public void deleteContactPlace(int contactId) throws SQLException {
+        try {
+            connection = DriverManager.getConnection(url, name, password);
+            preparedStatement = connection.prepareStatement("delete from contact_place where contact_id = ?;");
+            preparedStatement.setInt(1, contactId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+                            //    follow
+    public void addFriendShip(int contact1Id, int contact2Id) throws SQLException {
+        try{
+            connection = DriverManager.getConnection(url, name, password);
+            preparedStatement = connection.prepareStatement("INSERT INTO contact_friendship VALUES (?, ?);");
+            preparedStatement.setInt(1, contact1Id);
+            preparedStatement.setInt(2, contact2Id);
             preparedStatement.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
         }finally {
-            if(connection!=null){
+            if (connection != null) {
                 try {
                     connection.close();
 
@@ -100,7 +181,7 @@ public class ContactDaoImpl implements ContactDao{
                     e.printStackTrace();
                 }
             }
-            if(preparedStatement!=null){
+            if (preparedStatement != null) {
                 try {
                     preparedStatement.close();
 
@@ -111,30 +192,20 @@ public class ContactDaoImpl implements ContactDao{
         }
     }
 
-
-    public void addFriendShip(Contact c1, Contact c2) throws SQLException{
-
-    }
-
-
-    public void removeFriendShip(Contact c1, Contact c2) throws SQLException{
-
-    }
-
-    public int getContactId (Contact contact){
-        String firstName = contact.getFirstName();
-        String lastName = contact.getLastName();
+                             //   unfollow
+    public void removeFriendShip(int contact1Id, int contact2Id) throws SQLException {
         try{
-            preparedStatement = connection.prepareStatement("SELECT id from contact where first_name = ? and last_name = ?;");
-            preparedStatement.setString(1,firstName);
-            preparedStatement.setString(2,lastName);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            contact.setId(resultSet.getInt("id"));
-
-        } catch (SQLException e) {
+            connection = DriverManager.getConnection(url, name, password);
+            preparedStatement = connection.prepareStatement("DELETE FROM contact_friendship WHERE (contact_id = ? and friend_id = ?) or (friend_id = ? and contact_id = ?);");
+            preparedStatement.setInt(1, contact1Id);
+            preparedStatement.setInt(2, contact2Id);
+            preparedStatement.setInt(3, contact2Id);
+            preparedStatement.setInt(4, contact1Id);
+            preparedStatement.executeUpdate();
+        }catch (SQLException e){
             e.printStackTrace();
         }finally {
-            if(connection!=null){
+            if (connection != null) {
                 try {
                     connection.close();
 
@@ -142,7 +213,7 @@ public class ContactDaoImpl implements ContactDao{
                     e.printStackTrace();
                 }
             }
-            if(preparedStatement!=null){
+            if (preparedStatement != null) {
                 try {
                     preparedStatement.close();
 
@@ -151,7 +222,8 @@ public class ContactDaoImpl implements ContactDao{
                 }
             }
         }
-        return contact.getId();
     }
+
+
 
 }

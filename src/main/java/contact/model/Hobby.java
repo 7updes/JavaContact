@@ -18,6 +18,12 @@ public class Hobby {
         this.description = description;
     }
 
+    public Hobby(int id, String title, String description) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+    }
+
     public int getId() {
         return id;
     }
@@ -40,6 +46,15 @@ public class Hobby {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "Hobby{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
 
     @Override

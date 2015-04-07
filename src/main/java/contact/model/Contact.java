@@ -10,22 +10,28 @@ public class Contact {
     private String firstName;
     private String lastName;
     private Date birthDate;
-    private int id;
+    private int id ;
     private Set<Hobby> hobbies = new HashSet<Hobby>();
     private Set<Place> places = new HashSet<Place>();
     private List<Contact> friends = new ArrayList<Contact>();
     private List<Message> allConversation = new ArrayList<Message>();
 
+
     public Contact() {
     }
 
     public Contact(String firstName, String lastName) {
-        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
     public Contact(String firstName, String lastName, Date birthDate) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthDate = birthDate;
+    }
+
+    public Contact(int id, String firstName, String lastName, Date birthDate) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
