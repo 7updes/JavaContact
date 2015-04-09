@@ -63,6 +63,7 @@ public class PlaceDaoImpl implements PlaceDao {
                     e.printStackTrace();
                 }
             }
+            place.setId(getPlaceId(place));
         }
     }
 
@@ -104,6 +105,45 @@ public class PlaceDaoImpl implements PlaceDao {
             }
         }
         return contactsWithP;
+    }
+
+    @Override
+    public int getPlaceId(Place place) {
+        int placeId = 0;
+        String title = place.getTitle();
+        String description = place.getDescription();
+
+        try{
+            connection = DriverManager.getConnection(url, name, password);
+            preparedStatement = connection.prepareStatement("SELECT id FROM place where title = ? and description = ?");
+            preparedStatement.setString(1, title);
+            preparedStatement.setString(2, description);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                placeId = resultSet.getInt("id");
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return placeId;
     }
 }
 

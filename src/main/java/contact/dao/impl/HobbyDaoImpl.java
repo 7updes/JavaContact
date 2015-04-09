@@ -6,6 +6,7 @@ import contact.model.Hobby;
 
 import java.sql.*;
 import java.util.*;
+import java.util.Date;
 
 /**
  * Created by Alex on 11.03.2015.
@@ -61,6 +62,7 @@ public class HobbyDaoImpl implements HobbyDao{
                     e.printStackTrace();
                 }
             }
+            hobby.setId(getHobbyId(hobby));
         }
     }
 
@@ -103,6 +105,45 @@ public class HobbyDaoImpl implements HobbyDao{
             }
         }
         return contactsWithH;
+    }
+
+    @Override
+    public int getHobbyId(Hobby hobby) {
+        int hobbyId = 0;
+        String title = hobby.getTitle();
+        String description = hobby.getDescription();
+
+        try{
+            connection = DriverManager.getConnection(url, name, password);
+            preparedStatement = connection.prepareStatement("SELECT id FROM hobby where title = ? and description = ?");
+            preparedStatement.setString(1, title);
+            preparedStatement.setString(2, description);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                hobbyId = resultSet.getInt("id");
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return hobbyId;
     }
 
 

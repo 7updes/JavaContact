@@ -11,4 +11,5 @@ import java.util.Set;
 public interface HobbyDao {
     public void addHobby(Hobby hobby);
     public Set<Contact> getAllContactsWithHobby(Hobby hobby);
+    public int getHobbyId (Hobby hobby);
 }

@@ -11,4 +11,5 @@ import java.util.Set;
 public interface PlaceDao {
     public void addPlace(Place place);
     public Set<Contact> getAllContactsForPlace(Place place);
+    public int getPlaceId (Place place);
 }
