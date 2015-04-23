@@ -4,6 +4,7 @@ import contact.dao.PlaceDao;
 import contact.model.Contact;
 import contact.model.Hobby;
 import contact.model.Place;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.HashSet;
@@ -13,6 +14,7 @@ import java.util.Set;
 /**
  * Created by Alex on 11.03.2015.
  */
+@Repository
 public class PlaceDaoImpl implements PlaceDao {
 
     private static final String url = "jdbc:mysql://localhost:3306/contactdb";

@@ -3,6 +3,7 @@ package contact.dao.impl;
 import contact.dao.MessageDao;
 import contact.model.Contact;
 import contact.model.Message;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -14,6 +15,7 @@ import java.util.List;
 /**
  * Created by Alex on 11.03.2015.
  */
+@Repository
 public class MessageDaoImpl implements MessageDao {
 
     private static final String url = "jdbc:mysql://localhost:3306/contactdb";

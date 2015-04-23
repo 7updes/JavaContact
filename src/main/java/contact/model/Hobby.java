@@ -1,13 +1,25 @@
 package contact.model;
 
+
+
+import javax.persistence.*;
+
+
 /**
  * Created by Alex on 09.03.2015.
  */
+@Entity
+@Table(name = "hobby")
 public class Hobby {
-
+    @Column(name = "id")
     private int id;
+    @Column(name = "title")
     private String title;
+    @Column(name = "description")
     private String description;
+
+    public Hobby() {
+    }
 
     public Hobby(String title) {
         this.title = title;

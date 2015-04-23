@@ -67,6 +67,7 @@ public class ContactServiceImpl implements ContactService {
         int contactId = contact.getId();
         int placeId = place.getId();
         contactDao.addPlaceToContact(contactId, placeId);
+        contact.setPlaces(place);
     }
 
     @Override
@@ -75,6 +76,7 @@ public class ContactServiceImpl implements ContactService {
         int contactId = contact.getId();
         int hobbyId = hobby.getId();
         contactDao.addHobbyToContact(contactId,hobbyId);
+        contact.setHobbies(hobby);
     }
 
     @Override
@@ -83,6 +85,8 @@ public class ContactServiceImpl implements ContactService {
         int contact2Id = c2.getId();
         contactDao.addFriendShip(contact1Id, contact2Id);
         contactDao.addFriendShip(contact2Id, contact1Id);
+        c1.setFriends(c2);
+        c2.setFriends(c1);
     }
 
     @Override
@@ -107,5 +111,7 @@ public class ContactServiceImpl implements ContactService {
         int contactIdTo = to.getId();
         Message message = new Message(LocalDateTime.now(), content, contactIfFrom, contactIdTo);
         messageDao.storeMessage(message);
+        from.setConversation(message);
+        to.setConversation(message);
     }
 }

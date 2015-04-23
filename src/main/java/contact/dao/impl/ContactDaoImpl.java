@@ -14,12 +14,17 @@ import java.util.Date;
 
 import contact.model.Place;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.activation.DataSource;
 
 
 /**
  * Created by Alex on 11.03.2015.
  */
-
+@Repository
 public class ContactDaoImpl implements ContactDao {
 
     private List<Contact> allContacts = new ArrayList<Contact>();
@@ -30,8 +35,10 @@ public class ContactDaoImpl implements ContactDao {
     private PreparedStatement preparedStatement;
     private Statement statement;
 
+    
 
     @Override
+    @Transactional
     public void addContact(Contact contact) {
         try {
             connection = DriverManager.getConnection(url, name, password);
@@ -79,6 +86,7 @@ public class ContactDaoImpl implements ContactDao {
     }
 
     @Override
+    @Transactional
     public void deleteContact(int id){
         try {
             connection = DriverManager.getConnection(url, name, password);
@@ -107,7 +115,8 @@ public class ContactDaoImpl implements ContactDao {
         }
     }
 
-    @Override                          //for deleteContact()
+    @Override
+    @Transactional                     //for deleteContact()
     public void deleteContactHobby(int contactId){
         try {
             connection = DriverManager.getConnection(url, name, password);
@@ -136,7 +145,8 @@ public class ContactDaoImpl implements ContactDao {
         }
     }
 
-    @Override                          //for deleteContact()
+    @Override
+    @Transactional                              //for deleteContact()
     public void deleteContactPlace(int contactId){
         try {
             connection = DriverManager.getConnection(url, name, password);
@@ -165,7 +175,8 @@ public class ContactDaoImpl implements ContactDao {
         }
     }
 
-    @Override                          //for deleteContact()
+    @Override
+    @Transactional                         //for deleteContact()
     public void deleteAllContactsFriends(int contactId){
         try {
             connection = DriverManager.getConnection(url, name, password);
@@ -195,6 +206,7 @@ public class ContactDaoImpl implements ContactDao {
     }
 
     @Override                          //    follow
+    @Transactional
     public void addFriendShip(int contact1Id, int contact2Id){
         try{
             connection = DriverManager.getConnection(url, name, password);
@@ -225,6 +237,7 @@ public class ContactDaoImpl implements ContactDao {
     }
 
     @Override                          //   unfollow
+    @Transactional
     public void removeFriendShip(int contact1Id, int contact2Id){
         try{
             connection = DriverManager.getConnection(url, name, password);
@@ -257,6 +270,7 @@ public class ContactDaoImpl implements ContactDao {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Contact> getAllContact(){
         List<Contact> allContacts = new ArrayList<Contact>();
         try{
@@ -296,6 +310,7 @@ public class ContactDaoImpl implements ContactDao {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public int getContactId(Contact contact) {
         int contactId = 0;
         String firstName = contact.getFirstName();
@@ -336,6 +351,7 @@ public class ContactDaoImpl implements ContactDao {
     }
 
     @Override
+    @Transactional
     public void addHobbyToContact(int contactId, int hobbyId) {
         try{
             connection = DriverManager.getConnection(url, name, password);
@@ -367,6 +383,7 @@ public class ContactDaoImpl implements ContactDao {
     }
 
     @Override
+    @Transactional
     public void addPlaceToContact(int contactId, int placeId) {
         try{
             connection = DriverManager.getConnection(url, name, password);
@@ -398,6 +415,7 @@ public class ContactDaoImpl implements ContactDao {
     }
 
     @Override
+    @Transactional
     public Set<Contact> getFriends(int contactId) {
         Set<Contact> friends = new HashSet<Contact>();
         try{
@@ -435,4 +453,6 @@ public class ContactDaoImpl implements ContactDao {
         }
         return friends;
     }
+
+
 }

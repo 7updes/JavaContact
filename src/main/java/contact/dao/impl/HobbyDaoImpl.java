@@ -3,6 +3,7 @@ package contact.dao.impl;
 import contact.dao.HobbyDao;
 import contact.model.Contact;
 import contact.model.Hobby;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.*;
@@ -11,6 +12,7 @@ import java.util.Date;
 /**
  * Created by Alex on 11.03.2015.
  */
+@Repository
 public class HobbyDaoImpl implements HobbyDao{
 
     private static final String url = "jdbc:mysql://localhost:3306/contactdb";

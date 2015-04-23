@@ -1,6 +1,11 @@
 package contact.model;
 
 
+
+
+
+import javax.persistence.*;
+
 import java.security.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -8,12 +13,18 @@ import java.util.Date;
 /**
  * Created by Alex on 09.03.2015.
  */
+@Entity
+@Table(name = "message")
 public class Message {
-
+    @Column(name = "id")
     private int id;
+    @Column(name = "message_time")
     private LocalDateTime date;
+    @Column(name = "contact_from_id")
     private int contactIdFrom;
+    @Column(name = "contact_to_id")
     private int contactIdTo;
+    @Column(name = "content")
     private String content;
 
     public Message() {
