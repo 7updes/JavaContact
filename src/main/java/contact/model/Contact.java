@@ -4,38 +4,45 @@ package contact.model;
 import javax.persistence.*;
 
 import java.io.Serializable;
-import java.lang.annotation.Target;
+
+
 import java.util.*;
 
 /**
  * Created by Alex on 09.03.2015.
  */
 @Entity
-@Table(name = "contact")
-public class Contact {
-    @Column(name = "first_name")
-    private String firstName;
-    @Column(name = "last_name")
-    private String lastName;
-    @Column(name = "birth_date")
-    private Date birthDate;
-    @Column(name = "id")
+@Table(name = "CONTACT")
+public class Contact implements Serializable{
+    @Id
+    @Column(name = "ID")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id ;
+    @Column(name = "FIRST_NAME")
+    private String firstName;
+    @Column(name = "LAST_NAME")
+    private String lastName;
+    @Column(name = "BIRTH_DATE")
+    private Date birthDate;
 
-
+    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @JoinTable(name = "CONTACT_HOBBY", joinColumns = @JoinColumn(name = "CONTACT_ID"), inverseJoinColumns = @JoinColumn(name = "HOBBY_ID"))
     private Set<Hobby> hobbies = new HashSet<Hobby>();
+
+    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @JoinTable(name = "CONTACT_PLACE", joinColumns = @JoinColumn(name = "CONTACT_ID"), inverseJoinColumns = @JoinColumn(name = "PLACE_ID"))
     private Set<Place> places = new HashSet<Place>();
+
+    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @JoinTable(name = "CONTACT_FRIENDSHIP", joinColumns = @JoinColumn(name = "CONTACT_ID"), inverseJoinColumns = @JoinColumn(name = "FRIEND_ID"))
     private List<Contact> friends = new ArrayList<Contact>();
+
+    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @JoinTable(name = "MESSAGE", joinColumns = @JoinColumn(name = "CONTACT_FROM_ID"), inverseJoinColumns = @JoinColumn(name = "CONTACT_TO_ID"))
     private List<Message> allConversation = new ArrayList<Message>();
 
 
-    public Contact() {
-    }
-
-    public Contact(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
+    public Contact(){}
 
     public Contact(String firstName, String lastName, Date birthDate) {
         this.firstName = firstName;
@@ -43,29 +50,21 @@ public class Contact {
         this.birthDate = birthDate;
     }
 
-    public Contact(int id, String firstName, String lastName, Date birthDate) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.birthDate = birthDate;
-    }
 
     public List<Message> getAllConversation() {
         return allConversation;
     }
 
-    public List<Contact> getFriends() {
-        return friends;
+    public void setAllConversation(List<Message> allConversation) {
+        this.allConversation = allConversation;
     }
 
     public Date getBirthDate() {
         return birthDate;
     }
 
-    public int getId() { return id; }
-
-    public void setId(int id) {
-        this.id = id;
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
     }
 
     public String getFirstName() {
@@ -76,6 +75,30 @@ public class Contact {
         this.firstName = firstName;
     }
 
+    public List<Contact> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(List<Contact> friends) {
+        this.friends = friends;
+    }
+
+    public Set<Hobby> getHobbies() {
+        return hobbies;
+    }
+
+    public void setHobbies(Set<Hobby> hobbies) {
+        this.hobbies = hobbies;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getLastName() {
         return lastName;
     }
@@ -84,46 +107,22 @@ public class Contact {
         this.lastName = lastName;
     }
 
-    public void setBirthDate(Date birthDate) {
-
-        this.birthDate=birthDate;
-    }
-
-    public Set<Hobby> getHobbies() {
-        return hobbies;
-    }
-
-    public void setHobbies(Hobby hobby) {
-        hobbies.add(hobby);
-    }
-
     public Set<Place> getPlaces() {
         return places;
     }
 
-    public void setFriends(Contact friend) {
-        friends.add(friend);
-    }
-
-    public void setPlaces(Place place) {
-        places.add(place);
-    }
-
-    public void setConversation(Message conversation) {
-        allConversation.add(conversation) ;
+    public void setPlaces(Set<Place> places) {
+        this.places = places;
     }
 
     @Override
     public String toString() {
         return "Contact{" +
-                "id=" + id +
+                "birthDate=" + birthDate +
+                ", id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", birthDate=" + birthDate +
-                ", hobbies=" + hobbies +
-                ", places=" + places +
-                ", friends=" + friends +
-                '}'+"\n";
+                '}';
     }
 
     @Override
@@ -136,24 +135,16 @@ public class Contact {
         if (id != contact.id) return false;
         if (firstName != null ? !firstName.equals(contact.firstName) : contact.firstName != null) return false;
         if (lastName != null ? !lastName.equals(contact.lastName) : contact.lastName != null) return false;
-        if (birthDate != null ? !birthDate.equals(contact.birthDate) : contact.birthDate != null) return false;
-        if (hobbies != null ? !hobbies.equals(contact.hobbies) : contact.hobbies != null) return false;
-        if (places != null ? !places.equals(contact.places) : contact.places != null) return false;
-        if (friends != null ? !friends.equals(contact.friends) : contact.friends != null) return false;
-        return !(allConversation != null ? !allConversation.equals(contact.allConversation) : contact.allConversation != null);
+        return !(birthDate != null ? !birthDate.equals(contact.birthDate) : contact.birthDate != null);
 
     }
 
     @Override
     public int hashCode() {
-        int result = firstName != null ? firstName.hashCode() : 0;
+        int result = id;
+        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         result = 31 * result + (birthDate != null ? birthDate.hashCode() : 0);
-        result = 31 * result + id;
-        result = 31 * result + (hobbies != null ? hobbies.hashCode() : 0);
-        result = 31 * result + (places != null ? places.hashCode() : 0);
-        result = 31 * result + (friends != null ? friends.hashCode() : 0);
-        result = 31 * result + (allConversation != null ? allConversation.hashCode() : 0);
         return result;
     }
 }

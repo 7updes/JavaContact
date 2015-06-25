@@ -14,13 +14,18 @@ import java.util.Set;
  * Created by Alex on 11.03.2015.
  */
 public interface ContactService {
-    public Contact createContact(String firstName, String secondName, Date dateOfBirth);
-    public Hobby addHobby(String title, String description);
-    public Place addPlace(String title, String description);
-    public void setPlaceToContact(Contact contact, Place place);
-    public void setHobbyToContact(Contact contact, Hobby hobby);
-    public void addFriendship(Contact c1, Contact c2);
-    public Set<Contact> getFriendList(Contact contact);
-    public List<Message> getConversation(Contact c1, Contact c2);
-    public void sendMessage(String content, Contact from, Contact to);
+    void addContact(Contact contact);
+    void saveContact(Contact contact);
+    Contact getContactById (int id);
+    Hobby addHobby(String title, String description);
+    Place addPlace(String title, String description);
+    void setPlaceToContact(Contact contact, Place place);
+    void setHobbyToContact(Contact contact, Hobby hobby);
+    void addFriendship(Contact c1, Contact c2);
+    void removeFriendship(Contact c1, Contact c2);
+    List<Contact> getFriendList(Contact contact);
+    List<Message> getConversation(Contact c1, Contact c2);
+    void sendMessage(String content, Contact from, Contact to);
+    List<Contact> getAllContact();
+    void deleteContactById(int id);
 }

@@ -4,36 +4,43 @@ package contact.model;
 
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 
 /**
  * Created by Alex on 09.03.2015.
  */
 @Entity
-@Table(name = "place")
-public class Place {
-    @Column(name = "id")
+@Table(name = "PLACE")
+public class Place implements Serializable{
+    @Id
+    @Column(name = "ID")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @Column(name = "title")
+    @Column(name = "TITLE")
     private String title;
-    @Column(name = "description")
+    @Column(name = "DESCRIPTION")
     private String description;
+
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "places")
+    private Set<Contact> contacts = new HashSet<>();
 
     public Place() {
     }
 
-    public Place(String title) {
-        this.title = title;
-    }
-
     public Place(String title, String description) {
+        this.id = id;
         this.title = title;
         this.description = description;
     }
 
-    public Place(int id, String title, String description) {
-        this.id = id;
-        this.title = title;
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
         this.description = description;
     }
 
@@ -53,12 +60,12 @@ public class Place {
         this.title = title;
     }
 
-    public String getDescription() {
-        return description;
+    public Set<Contact> getContacts() {
+        return contacts;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setContacts(Set<Contact> contacts) {
+        this.contacts = contacts;
     }
 
     @Override

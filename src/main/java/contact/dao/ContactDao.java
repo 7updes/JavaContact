@@ -14,18 +14,15 @@ import java.util.Set;
  */
 public interface ContactDao {
 
-    public void addContact(Contact contact) ;
-    public void deleteContact(int id);
-    public void deleteContactPlace(int contactId);
-    public void deleteContactHobby(int contactId);
-    public void deleteAllContactsFriends(int contactId);
-    public void addFriendShip(int contact1Id, int contact2Id);
-    public void removeFriendShip(int contact1Id, int contact2Id);
-    public List<Contact> getAllContact();
-    public int getContactId(Contact contact);
-    public void addHobbyToContact(int contactId, int hobbyId);
-    public void addPlaceToContact(int contactId, int placeId);
-    public Set<Contact> getFriends (int contactId);
+    void addContact(Contact contact) ;
+    void saveContact(Contact contact);
+    void deleteContact(Contact contact);
+    void addFriendShip(Contact contact, Contact contact2);
+    void removeFriendShip(Contact contact, Contact contact2);
+    List<Contact> getAllContact();
+    void addHobbyToContact(Contact contact, Hobby hobby);
+    void addPlaceToContact(Contact contact, Place place);
+    Contact getContactById(int id);
+
 
 }
-//CRUD

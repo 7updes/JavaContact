@@ -24,3 +24,13 @@ insert into contact_place (contact_id, place_id) values (1, 1);
 insert into contact_place (contact_id, place_id) values (2, 3);
 insert into contact_place (contact_id, place_id) values (3, 3);
 insert into contact_place (contact_id, place_id) values (2, 1);
+
+insert into contact_friendship (contact_id, friend_id) values (1, 2);
+insert into contact_friendship (contact_id, friend_id) values (1, 4);
+insert into contact_friendship (contact_id, friend_id) values (2, 4);
+insert into contact_friendship (contact_id, friend_id) values (3, 4);
+
+insert into message (message_time, content, contact_from_id, contact_to_id) values (CURRENT_TIMESTAMP , 'wazzup niga', 1, 2);
+insert into message (message_time, content, contact_from_id, contact_to_id) values (CURRENT_TIMESTAMP, 'yoyo', 2, 1);
+insert into message (message_time, content, contact_from_id, contact_to_id) values (CURRENT_TIMESTAMP, 'what time ? ', 1, 4);
+insert into message (message_time, content, contact_from_id, contact_to_id) values (CURRENT_TIMESTAMP, '5 oclock', 4, 1);

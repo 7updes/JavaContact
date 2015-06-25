@@ -6,51 +6,43 @@ package contact.model;
 
 import javax.persistence.*;
 
-import java.security.Timestamp;
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.io.Serializable;
+
+import java.sql.Timestamp;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by Alex on 09.03.2015.
  */
 @Entity
-@Table(name = "message")
-public class Message {
-    @Column(name = "id")
+@Table(name = "MESSAGE")
+public class Message implements Serializable{
+    @Id
+    @Column(name = "ID")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @Column(name = "message_time")
-    private LocalDateTime date;
-    @Column(name = "contact_from_id")
+    @Column(name = "MESSAGE_TIME")
+    private Timestamp date;
+    @Column(name = "CONTACT_FROM_ID")
     private int contactIdFrom;
-    @Column(name = "contact_to_id")
+    @Column(name = "CONTACT_TO_ID")
     private int contactIdTo;
-    @Column(name = "content")
+    @Column(name = "CONTENT")
     private String content;
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "allConversation")
+    private List<Contact> conversation = new LinkedList<>();
+
 
     public Message() {
     }
 
-    public Message( LocalDateTime date, String content, int contactIdFrom, int contactIdTo) {
+    public Message( Timestamp date, String content, int contactIdFrom, int contactIdTo) {
         this.date = date;
         this.content = content;
         this.contactIdFrom = contactIdFrom;
         this.contactIdTo = contactIdTo;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public LocalDateTime getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDateTime date) {
-        this.date = date;
     }
 
     public int getContactIdFrom() {
@@ -77,8 +69,63 @@ public class Message {
         this.content = content;
     }
 
+    public Timestamp getDate() {
+        return date;
+    }
+
+    public void setDate(java.sql.Timestamp date) {
+        this.date = date;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public List<Contact> getConversation() {
+        return conversation;
+    }
+
+    public void setConversation(List<Contact> conversation) {
+        this.conversation = conversation;
+    }
+
     @Override
     public String toString() {
-        return content +" \n";
+        return "Message{" +
+                "contactIdFrom=" + contactIdFrom +
+                ", id=" + id +
+                ", date=" + date +
+                ", contactIdTo=" + contactIdTo +
+                ", content='" + content + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Message message = (Message) o;
+
+        if (id != message.id) return false;
+        if (contactIdFrom != message.contactIdFrom) return false;
+        if (contactIdTo != message.contactIdTo) return false;
+        if (date != null ? !date.equals(message.date) : message.date != null) return false;
+        return !(content != null ? !content.equals(message.content) : message.content != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (date != null ? date.hashCode() : 0);
+        result = 31 * result + contactIdFrom;
+        result = 31 * result + contactIdTo;
+        result = 31 * result + (content != null ? content.hashCode() : 0);
+        return result;
     }
 }

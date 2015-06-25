@@ -3,36 +3,43 @@ package contact.model;
 
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 
 /**
  * Created by Alex on 09.03.2015.
  */
 @Entity
-@Table(name = "hobby")
-public class Hobby {
-    @Column(name = "id")
+@Table(name = "HOBBY")
+public class Hobby implements Serializable{
+    @Id
+    @Column(name = "ID")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @Column(name = "title")
+    @Column(name = "TITLE")
     private String title;
-    @Column(name = "description")
+    @Column(name = "DESCRIPTION")
     private String description;
+
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "hobbies")
+    private Set<Contact> contacts = new HashSet<>();
 
     public Hobby() {
     }
 
-    public Hobby(String title) {
-        this.title = title;
-    }
-
     public Hobby(String title, String description) {
+        this.id = id;
         this.title = title;
         this.description = description;
     }
 
-    public Hobby(int id, String title, String description) {
-        this.id = id;
-        this.title = title;
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
         this.description = description;
     }
 
@@ -52,12 +59,12 @@ public class Hobby {
         this.title = title;
     }
 
-    public String getDescription() {
-        return description;
+    public Set<Contact> getContacts() {
+        return contacts;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setContacts(Set<Contact> contacts) {
+        this.contacts = contacts;
     }
 
     @Override
